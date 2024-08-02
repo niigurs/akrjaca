@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyramid</title>
+    <link rel="shortcut icon" href="https://iimg.su/s/30/cZauUgFOlUiHlc2VndHRkbY6hkfKi8aAy63ELv0c.png"/>
+    <style>
+        body {
+            background-color: black;
+            color: #1af012;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+        }
+        .header {
+            width: 100%;
+            max-width: 414px;
+            padding: 10px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header .back-button {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            width: 60px;
+            height: auto;
+            cursor: pointer;
+        }
+        .header .logo {
+            width: 120px;
+            height: auto;
+        }
+        .container {
+            max-width: 414px;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .button {
+            background-color: black;
+            color: #1af012;
+            padding: 2px 20px; /* Уменьшение высоты кнопок */
+            border: 2px solid #1af012;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 0 10px;
+            text-align: center;
+            max-width: 150px;
+        }
+        .button img {
+            max-width: 50%; /* Уменьшение размера картинок кнопок в два раза */
+            height: auto;
+        }
+        .button:hover {
+            background-color: #1af012;
+            color: black;
+        }
+        .footer {
+            max-width: 414px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background-color: black;
+            padding: 20px;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: 0;
+        }
+        .tab {
+            display: none;
+            text-align: center;
+        }
+        .tab.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Занимает всю высоту экрана */
+            box-sizing: border-box;
+        }
+        .referrals-info {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .referrals-info span {
+            font-weight: bold;
+        }
+        .wallet-info {
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            text-align: center; /* Выравнивание текста по центру */
+            margin-bottom: 200px; /* Отступ снизу для кнопок и их отступ от нижнего края */
+        }
+        .wallet-info span {
+            font-weight: bold;
+        }
+        .wallet-info img {
+            max-width: 20px;
+            height: auto;
+            margin-left: 5px;
+        }
+        .wallet-info .icon {
+            max-width: 30px;
+            height: auto;
+            margin-right: 5px;
+        }
+        .wallet-actions {
+            width: 100%;
+            max-width: 414px;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: 40px; /* Подняли кнопки на 20 пикселей выше от предыдущего значения */
+            background-color: black; /* Цвет фона кнопок */
+        }
+        .wallet-actions .button {
+            padding: 10px 20px;
+            flex: 1;
+            margin: 0; /* Убирает отступы */
+        }
+        .hidden {
+            display: none;
+        }
+        #main-content {
+            background-image: url('https://s.iimg.su/s/31/85TwDUFTfx6MRazGAMzdYfeHdPiWtCaOhIQ1ZzE8.png');
+            background-size: 100%; /* Увеличение размера изображения в два раза */
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://iimg.su/s/30/Wr5JiPRvd6y2QvkHKDRu6bahObp7N4QDVP4gegw4.png" class="back-button" id="back-button" onclick="showTab('main-content')">
+        <img src="https://s.iimg.su/s/02/TEZqDba9WXQkBPNpBQNFWp1Q29huVGnpquINhONv.png" class="logo">
+    </div> 
+    <div class="container" id="main-content">
+    </div>
+    <div class="container tab" id="referrals-tab">
+        <div class="referrals-info">
+            <p>Ваши рефералы: <span>0</span></p>
+            <p>Ваш % за реферала: <span>1%</span></p>
+        </div>
+    </div>
+    <div class="container tab" id="wallet-tab">
+        <div class="wallet-info">
+            <p>1 PYRA <img src="https://iimg.su/s/30/cZauUgFOlUiHlc2VndHRkbY6hkfKi8aAy63ELv0c.png" class="icon"> = 1 TON <img src="https://iimg.su/s/30/3sD43mJcjlvXx3cEhLWqj7XiOdtCIawKp8f1d6MI.png" class="icon"></p>
+            <p>Ваш баланс: <span>0</span></p>
+        </div>
+        <div class="wallet-actions">
+            <button class="button" onclick="handleDeposit()">Deposit</button>
+            <button class="button" onclick="handleWithdraw()">Withdraw</button>
+        </div>
+    </div>
+    <div class="footer">
+        <button id="referals-button" class="button" onclick="showTab('referrals-tab')">
+            <img src="https://s.iimg.su/s/02/YUtuWNeCHGIVGCLayQQdRdswiznmbIixsB7f8ewb.png" alt="Referals">
+        </button>
+        <button id="wallet-button" class="button" onclick="showTab('wallet-tab')">
+            <img src="https://s.iimg.su/s/02/W9cy7aVxRAlftdcPY1HRUfsLkguN8BgdsJ1qwyre.png" alt="Wallet">
+        </button>
+    </div>
+    <script>
+        function showTab(tabId) {
+            // Скрыть все табы и показать активный
+            document.querySelectorAll('.container, .tab').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+
+            // Кнопки в нижней части экрана
+            const referalsButton = document.getElementById('referals-button');
+            const walletButton = document.getElementById('wallet-button');
+            const backButton = document.getElementById('back-button');
+            const mainContent = document.getElementById('main-content');
+
+            // Установить видимость кнопки "Назад"
+            if (tabId === 'main-content') {
+                mainContent.style.backgroundImage = "url('https://s.iimg.su/s/31/85TwDUFTfx6MRazGAMzdYfeHdPiWtCaOhIQ1ZzE8.png')";
+                backButton.classList.add('hidden');
+                referalsButton.classList.remove('hidden');
+                walletButton.classList.remove('hidden');
+            } else {
+                mainContent.style.backgroundImage = "none";
+                backButton.classList.remove('hidden');
+                referalsButton.classList.add('hidden');
+                walletButton.classList.add('hidden');
+            }
+        }
+
+        function handleDeposit() {
+            alert('Deposit functionality not implemented.');
+        }
+
+        function handleWithdraw() {
+            alert('Withdraw functionality not implemented.');
+        }
+
+        // Показать главное меню по умолчанию
+        showTab('main-content');
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+           
+
+
+
+
+
+
